@@ -1,0 +1,29 @@
+sudo: required
+language: python
+python:
+  - "2.7"
+  - "3.6"
+
+cache:
+  - pip
+  - yarn
+
+before_install:
+  # downgrade setuptools to work around the 'tests_require' error
+  - pip install setuptools==37.0.0
+  - . $HOME/.nvm/nvm.sh
+  - nvm install stable
+  - nvm use stable
+  - npm install
+
+install:
+  - make init
+
+script:
+  - make test
+
+#after_success:
+  - codecov --token=9c6e620b-d46a-4049-b501-4f61655ec695
+
+notifications:
+  email: false
